@@ -1,13 +1,15 @@
-function boundRangeWrap(lower, upper, number) {
-  // bound between two numbers wrapping around when going beyond limits
+function boundRangeWrap(lower, upper, num) {
+  // bound between two numbers (inclusive) wrapping around when going beyond limits
   // first shift everything from upper->lower to (0->upper-lower)
-  const upperShifted = upper - lower;
-  const numberShifted = number - lower;
-  const result = ((numberShifted % upperShifted) + upperShifted) % upperShifted;
+  const upperShifted = upper - lower + 1; // plus 1 for "inclusive" to upper bound
+  const numShifted = num - lower;
+  const result = ((numShifted % upperShifted) + upperShifted) % upperShifted;
   // unshift things
   return result + lower;
 }
 
-console.log(boundRangeWrap(5, 99, 281));
-console.log(boundRangeWrap(5, 99, 4));
-console.log(boundRangeWrap(5, 99, -19));
+console.log(boundRangeWrap(5, 12, 4)); // 12
+console.log(boundRangeWrap(5, 12, 15)); // 7
+console.log(boundRangeWrap(5, 12, -5)); // 11
+console.log(boundRangeWrap(5, 12, 5)); // 5
+console.log(boundRangeWrap(5, 12, 12)); // 12

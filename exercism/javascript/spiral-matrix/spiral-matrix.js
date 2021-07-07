@@ -1,50 +1,45 @@
-//
-// This is only a SKELETON file for the 'Spiral Matrix' exercise. It's been provided as a
-// convenience to get you started writing code faster.
-//
+const EMPTY = 'empty';
 
+// build matrix where each open spot is EMPTY, we'll check for this explicitly later
 const buildGrid = (size) =>
-  Array.from({ length: size }, () => [...new Array(size).fill([])]);
+  Array.from({ length: size }, () => new Array(size).fill(EMPTY));
 
-const getNextCoords = (row, col, direction, grid) => {
-  switch (direction) {
-    case 'right':
-      break;
-    case 'down':
-      break;
-    case 'left':
-      break;
-    case 'up':
-      break;
+const isValidCoord = ({ row, col }, grid) =>
+  grid[row] && grid[row][col] === EMPTY;
+
+const directionFns = [
+  ({ row, col }) => ({ row, col: col + 1 }),
+  ({ row, col }) => ({ row: row + 1, col }),
+  ({ row, col }) => ({ row, col: col - 1 }),
+  ({ row, col }) => ({ row: row - 1, col }),
+];
+
+const doSpiralGrid = (grid, row = 0, col = -1, direction = 0, count = 1) => {
+  let nextCoords = directionFns[direction]({ row, col });
+  // if possible, go in the direction indicated
+  if (isValidCoord(nextCoords, grid)) {
+    const { row: nextRow, col: nextCol } = nextCoords;
+    grid[nextRow][nextCol] = count++;
+    return doSpiralGrid(grid, nextRow, nextCol, direction, count);
   }
+
+  // check if we need to turn and go in a different direction
+  direction = (direction + 1) % 4;
+  nextCoords = directionFns[direction]({ row, col });
+  if (isValidCoord(nextCoords, grid)) {
+    return doSpiralGrid(grid, row, col, direction, count);
+  }
+
+  // if we can't go in the current or next direction, we're done!
+  return grid;
 };
 
 export class SpiralMatrix {
   static ofSize(size) {
-    // build matrix
-    // given current number, find next coordinate
-    // let maxRow, maxCol, row, col
-    let minRow = 0;
-    let maxRow = size - 1;
-    let minCol = 0;
-    let maxCol = size - 1;
-    let count = 1;
-    let row = 0;
-    let col = 0;
-    const grid = buildGrid(size);
-    do {
-      grid[row][col] = count;
-      count++;
-      const nextCoords = getNextCoords(
-        row,
-        col,
-        minRow,
-        maxRow,
-        minCol,
-        maxCol
-      );
-      row = nextCoors.row;
-      col = nextCoors.col;
-    } while (row > -1 && col > -1);
+    if (size < 1) {
+      return [];
+    }
+
+    return doSpiralGrid(buildGrid(size));
   }
 }

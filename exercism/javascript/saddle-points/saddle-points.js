@@ -3,23 +3,6 @@
 // convenience to get you started writing code faster.
 //
 
-// greater than or equal to
-// every element in its row and less than or equal to every element in
-// its column.
-
-// returns [{row, column}]
-
-/*
-
- [greatest column for each row]
- [smallest row for each column]
-
-if the column in a matches the row in b then it's a match!
-
-transpose the matrix and find smallest
-
-*/
-
 const isSaddlePoint = (matrix, row, col) => {
   const height = matrix.length;
   const compare = matrix[row][col];

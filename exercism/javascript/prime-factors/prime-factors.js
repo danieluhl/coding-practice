@@ -19,7 +19,7 @@ const isPrime = (num) => {
 export const primeFactors = (num) => {
   if(num === 1) {
     return [];
-  }
+  }k
   if(isPrime(num)) {
     return [num];
   }

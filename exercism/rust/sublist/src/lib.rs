@@ -12,8 +12,8 @@ pub fn sublist<T: PartialEq + Debug>(_first_list: &[T], _second_list: &[T]) -> C
     use Comparison::*;
     match (_first_list.len(), _second_list.len()) {
         (0, 0) => Equal,
-        (_, 0) => Superlist,
-        (0, _) => Sublist,
+        (_, 0) => Sublist,
+        (0, _) => Superlist,
         (m, n) if m > n => {
             if _first_list.windows(n).any(|v| v == _second_list) {
                 Superlist

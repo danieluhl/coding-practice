@@ -9,6 +9,36 @@ pub enum Comparison {
 }
 
 pub fn sublist<T: PartialEq + Debug>(_first_list: &[T], _second_list: &[T]) -> Comparison {
+    use Comparison::*;
+    match (_first_list.len(), _second_list.len()) {
+        (0, 0) => Equal,
+        (_, 0) => Superlist,
+        (0, _) => Sublist,
+        (m, n) if m > n => {
+            if _first_list.windows(n).any(|v| v == _second_list) {
+                Superlist
+            } else {
+                Unequal
+            }
+        }
+        (m, n) if m < n => {
+            if _second_list.windows(m).any(|v| v == _first_list) {
+                Sublist
+            } else {
+                Unequal
+            }
+        }
+        (_, _) => {
+            if _first_list == _second_list {
+                Equal
+            } else {
+                Unequal
+            }
+        }
+    }
+}
+
+pub fn sublist2<T: PartialEq + Debug>(_first_list: &[T], _second_list: &[T]) -> Comparison {
     let first_len = _first_list.len();
     let second_len = _second_list.len();
     // define largest, smallest

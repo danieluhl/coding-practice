@@ -2,11 +2,15 @@
 
 Welcome to Semi Structured Logs on Exercism's Rust Track.
 If you need help running the tests or submitting your code, check out `HELP.md`.
-If you get stuck on the exercise, check out `HINTS.md`, but try and solve it without using those first :)
+If you get stuck on the exercise, check out `HINTS.md`, but try and solve it
+without using those first :)
 
 ## Introduction
 
-Enums, short for enumerations, are a type that limits all possible values of some data. The possible values of an `enum` are called variants. Enums also work well with `match` and other control flow operators to help you express intent in your Rust programs.
+Enums, short for enumerations, are a type that limits all possible values of
+some data. The possible values of an `enum` are called variants. Enums also work
+well with `match` and other control flow operators to help you express intent in
+your Rust programs.
 
 ## Instructions
 
@@ -28,7 +32,8 @@ pub enum LogLevel {
 Your goal is to emit a log message as follows: `"[<LEVEL>]: <MESSAGE>"`.
 You'll need to implement functions that correspond with log levels.
 
-For example, the below snippet demonstrates an expected output for the `log` function.
+For example, the below snippet demonstrates an expected output for the `log`
+function.
 
 ```rust
 log(LogLevel::Error, "Stack overflow")
@@ -49,7 +54,8 @@ Have fun!
 There is a feature-gated test in this suite.
 Feature gates disable compilation entirely for certain sections of your program.
 They will be covered later.
-For now just know that there is a test which is only built and run when you use a special testing invocation:
+For now just know that there is a test which is only built and run when you use
+a special testing invocation:
 
 ```sh
 cargo test --features add-a-variant

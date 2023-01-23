@@ -22,8 +22,10 @@ impl fmt::Display for LogLevel {
 }
 /// primary function for emitting logs
 pub fn log(level: LogLevel, message: &str) -> String {
-    let foo = level.to_string();
-    return format!("[{foo}]: {message}");
+    // alternatively
+    // let msg = format!("{:?}", LogLevel);
+    // level.to_uppercase()
+    return format!("[{}]: {}", level, message);
 }
 pub fn info(message: &str) -> String {
     return log(LogLevel::Info, message);

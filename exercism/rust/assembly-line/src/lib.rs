@@ -5,13 +5,20 @@
 const COUNT_PER_HOUR: f64 = 221.0;
 pub fn production_rate_per_hour(speed: u8) -> f64 {
     let max_production = speed as f64 * COUNT_PER_HOUR;
+    // match speed {
+    //     // 100
+    //     s if s < 5 => max_production,
+    //     // 90
+    //     s if s < 9 => 0.9 * max_production,
+    //     // 77
+    //     _ => 0.77 * max_production,
+    // }
     match speed {
-        // 100
-        s if s < 5 => max_production,
-        // 90
-        s if s < 9 => 0.9 * max_production,
-        // 77
-        _ => 0.77 * max_production,
+        0 => 0.0,
+        1..=4 => max_production,
+        5..=8 => 0.9 * max_production,
+        9..=10 => 0.77 * max_production,
+        _ => panic!("Unexpected speed {}", speed),
     }
 }
 

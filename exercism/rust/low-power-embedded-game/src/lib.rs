@@ -7,7 +7,13 @@ pub fn evens<T>(iter: impl Iterator<Item = T>) -> impl Iterator<Item = T> {
     //     .enumerate()
     //     .filter(|(i, _)| i % 2 == 0)
     //     .map(|(_, val)| val);
-    iter.step_by(2)
+    // iter.step_by(2)
+    iter.enumerate().filter_map(|(i, val)| {
+        if i % 2 == 0 {
+            return Some(val);
+        }
+        return None;
+    })
 }
 
 pub struct Position(pub i16, pub i16);

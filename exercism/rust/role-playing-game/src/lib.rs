@@ -1,6 +1,4 @@
-// This stub file contains items that aren't used yet; feel free to remove this module attribute
-// to enable stricter warnings.
-#![allow(unused)]
+use std::cmp::min;
 
 pub struct Player {
     pub health: u32,
@@ -9,55 +7,34 @@ pub struct Player {
 }
 
 impl Player {
+    fn new(level: u32) -> Player {
+        Self {
+            health: 100,
+            mana: if level >= 10 { Some(100) } else { None },
+            level,
+        }
+    }
+
     pub fn revive(&self) -> Option<Player> {
-        let ten: u32 = 10;
-        match self {
-            Player {
-                health: 0,
-                mana,
-                level,
-            } if level >= &ten => Some(Player {
-                health: 100,
-                mana: Some(100),
-                level: *level,
-            }),
-            Player {
-                health: 0,
-                mana,
-                level,
-            } if level < &ten => Some(Player {
-                health: 100,
-                mana: None,
-                level: *level,
-            }),
+        match self.health {
+            0 => Some(Player::new(self.level)),
             _ => None,
         }
     }
 
     pub fn cast_spell(&mut self, mana_cost: u32) -> u32 {
-        match self {
-            Player {
-                health,
-                mana: None,
-                level,
-            } => {
-                self.health = if self.health <= mana_cost {
-                    0
-                } else {
-                    self.health - mana_cost
-                };
-                return 0;
-            }
-            Player {
-                health,
-                mana: Some(m),
-                level,
-            } => {
-                if let true = *m >= mana_cost {
-                    self.mana = Some(*m - mana_cost);
+        match self.mana {
+            Some(m) => {
+                if m >= mana_cost {
+                    self.mana = Some(m - mana_cost);
                     return mana_cost * 2;
+                } else {
+                    0
                 }
-                return 0;
+            }
+            None => {
+                self.health = self.health - min(self.health, mana_cost);
+                0
             }
         }
     }

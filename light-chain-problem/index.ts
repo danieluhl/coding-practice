@@ -1,4 +1,5 @@
 #!/usr/bin/env -S ts-node --files
+// run with npx ts-node --esm index.ts
 
 const sample1 = [1, 3, 5, 2, 4];
 const sample2 = [1, 2, 3];

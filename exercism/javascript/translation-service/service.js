@@ -103,10 +103,24 @@ export class TranslationService {
         })
         .catch((e) => {
           if (e instanceof NotAvailable) {
-            this.request(text).then((t) => res("I don't understand"));
+            this.request(text)
+              .then(() => {
+                this.api.fetch(text).then(({ quality, translation }) => {
+                  if (quality > minimumQuality) {
+                    res(translation);
+                  } else {
+                    rej(new QualityThresholdNotMet(text));
+                  }
+                });
+              })
+              .catch((err) => {
+                rej(err);
+              });
           } else if (e instanceof Untranslatable) {
+            console.log("untranslatable");
             rej(e);
           } else {
+            console.log("dont understand");
             res("I don't understand");
           }
         });
@@ -126,7 +140,7 @@ export class QualityThresholdNotMet extends Error {
     super(
       `
 The translation of ${text} does not meet the requested quality threshold.
-    `.trim()
+    `.trim(),
     );
 
     this.text = text;
@@ -142,7 +156,7 @@ export class BatchIsEmpty extends Error {
     super(
       `
 Requested a batch translation, but there are no texts in the batch.
-    `.trim()
+    `.trim(),
     );
   }
 }
